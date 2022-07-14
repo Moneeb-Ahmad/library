@@ -9,7 +9,33 @@
 </head>
 
 <body>
+  <button class="open-button" onclick="openForm()">Add book</button>
   <div class="container">
+  </div>
+  <div class="form-popup" id="myForm">
+    <form ACTION="" METHOD="GET" class="form-container">
+      <h1>Book Details</h1>
+      <label for="title"><b>Title</b></label>
+      <input type="text" placeholder="Enter Title" name="title" required>
+      <label for="author"><b>Author</b></label>
+      <input type="text" placeholder="Enter Author" name="author" required>
+      <label for="page"><b>Page Number</b></label>
+      <input type="number" placeholder="Enter Page Number" name="page" required>
+      <label for="read"><b>Read?</b>
+        <div class="read-btn">
+          <div>
+            <input type="radio" name="read" value="Y" required>
+            Yes
+          </div>
+          <div>
+            <input type="radio" name="read" value="N" required>
+            No
+          </div>
+        </div>
+      </label>
+      <button type="button" class="btn" onClick="addBookToLibrary(this.form)">Add</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
   </div>
 </body>
 

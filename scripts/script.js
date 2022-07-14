@@ -2,6 +2,7 @@ let myLibrary = [];
 let libInd = 0;
 const container = document.querySelector('.container');
 
+
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -13,14 +14,28 @@ function Book(title, author, pages, read) {
 }
 }
 
-function addBookToLibrary() {
-  let title = "The Hobbit"//window.prompt("Title of book?");
-  let author = "John Doe"//window.prompt("Author of book?");
-  let pages = 21//Number(window.prompt("Pages of book?"));
-  let read = "y"//window.prompt("Have you read the book?");
-  let readBool = read.includes("y") || read.includes("Y") ? true : false;
+function addBookToLibrary(form) {
+  let title = form.title.value;
+  let author = form.author.value;
+  let pages = Number(form.page.value);
+  let read = form.read.value;
+  let readBool = read === "Y" ? true : false;
   let newBook = new Book(title, author, pages, readBool);
   myLibrary.push(newBook);
+	displayLibrary();
+	reset(form);
+	closeForm();
+}
+
+function addBookToLibraryTest() {
+  let title = "f";
+  let author = "g";
+  let pages = 2;
+  let read = "g";
+  let readBool = read === "Y" ? true : false;
+  let newBook = new Book(title, author, pages, readBool);
+  myLibrary.push(newBook);
+	displayLibrary();
 }
 
 function displayLibrary() {
@@ -58,4 +73,19 @@ function applyDivStyleGeneral(div,i) {
     width: clamp(150px, 80%, 400px);
     height: auto;`
   );
+}
+
+function openForm() {
+  document.getElementById("myForm").style.display = "inline";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+function reset(form) {
+	form.title.value = '';
+	form.author.value = '';
+	form.page.value = '';
+	form.read.value = '';
 }
