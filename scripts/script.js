@@ -1,6 +1,6 @@
 let myLibrary = [];
-let libInd = 0;
 const container = document.querySelector('.container');
+let tester = 0;
 
 
 function Book(title, author, pages, read) {
@@ -8,10 +8,10 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-	this.info = function() {
-	let r = read ? "read" : "not read yet";
-	return `${title} \r\nBy: \r\n${author} \r\n${pages} pages \r\n${r}`;
-}
+  this.info = function() {
+    let r = read ? "read" : "not read yet";
+    return `${title} \r\nBy: \r\n${author} \r\n${pages} pages \r\n${r}`;
+  }
 }
 
 function addBookToLibrary(form) {
@@ -22,40 +22,50 @@ function addBookToLibrary(form) {
   let readBool = read === "Y" ? true : false;
   let newBook = new Book(title, author, pages, readBool);
   myLibrary.push(newBook);
-	displayLibrary();
-	reset(form);
-	closeForm();
+  displayLibrary();
+  reset(form);
+  closeForm();
 }
 
 function addBookToLibraryTest() {
-  let title = "f";
-  let author = "g";
-  let pages = 2;
-  let read = "g";
+  let title = "t";
+  let author = "a";
+  let pages = tester;
+  let read = "n";
   let readBool = read === "Y" ? true : false;
   let newBook = new Book(title, author, pages, readBool);
   myLibrary.push(newBook);
-	displayLibrary();
+  displayLibrary();
+	tester++;
 }
 
 function displayLibrary() {
-	let count = libInd;
-  for (let i = libInd; i < myLibrary.length; i++) {
+  removeAllChildrenFromContainer();
+  for (let i = 0; i < myLibrary.length; i++) {
     const div = document.createElement('div');
-    applyDivStyleGeneral(div,i);
-    div.classList.add('gridItem');
-		container.appendChild(div);
-		count++;
+    const btn = document.createElement('button');
+    applyDivStyleGeneral(div, i);
+		applyButtonStyle(btn);
+		btn.addEventListener('click', removeBtnClick);
+    div.appendChild(btn);
+    container.appendChild(div);
+    console.log(div.getAttribute('data-key'));
   }
-	libInd = count;
 }
 
-function applyDivStyleGeneral(div,i) {
-	div.textContent = `${myLibrary[i].info()}`;
+function removeAllChildrenFromContainer() {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
+function applyDivStyleGeneral(div, i) {
+  div.textContent = `${myLibrary[i].info()}`;
+  div.setAttribute('data-key', i);
   div.setAttribute(
     'style',
     `display: flex;
-		padding: 8px 0px 8px 8px;
+		padding: 8px;
 		white-space: pre-wrap;
 		flex-direction: column;
     border-width: 1px;
@@ -75,6 +85,29 @@ function applyDivStyleGeneral(div,i) {
   );
 }
 
+function applyButtonStyle(btn) {
+	btn.textContent = "Remove Book";
+  btn.setAttribute(
+    'style',
+    `background-color: aquamarine;
+		color: black;
+		border-radius: 10px;
+		font-size: 18px;
+		border: 2px;
+		border-style: solid;
+		border-color: black;
+		margin-top: 8px;
+		padding: 4px 32px;
+		align-self: start;
+		margin-bottom: 2%;`
+	);
+}
+
+function removeBook(div) {
+	let ind = div.getAttribute("data-key");
+	myLibrary.splice(ind,1);
+	displayLibrary();
+}
 function openForm() {
   document.getElementById("myForm").style.display = "inline";
 }
@@ -84,8 +117,12 @@ function closeForm() {
 }
 
 function reset(form) {
-	form.title.value = '';
-	form.author.value = '';
-	form.page.value = '';
-	form.read.value = '';
+  form.title.value = '';
+  form.author.value = '';
+  form.page.value = '';
+  form.read.value = '';
+}
+
+function removeBtnClick(e) {
+	removeBook(e.target.parentElement);
 }
