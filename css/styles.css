@@ -1,6 +1,7 @@
 body {
   background-color: #222222;
 }
+
 ul {
   list-style: none;
 }
@@ -11,8 +12,6 @@ ul {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 16px;
 }
-
-
 
 /*****************Code Provided by w3 Schools for pop-up form******************/
 .open-button {
@@ -53,12 +52,13 @@ ul {
   background: #f1f1f1;
 }
 
-.read-btn{
+.read-btn {
   display: flex;
   flex-direction: row;
   margin: 5px 0 22px 0;
   gap: 16px;
 }
+
 /* When the inputs get focus, do something */
 .form-container input[type=text]:focus, .form-container input[type=checkbox]:focus,
 .form-container input[type=number]:focus, .form-container input[type=radio]:focus {
@@ -87,4 +87,5 @@ ul {
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+
 /********************************End Pop-up Form******************************/

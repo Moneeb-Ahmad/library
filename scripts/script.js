@@ -9,8 +9,11 @@ function Book(title, author, pages, read) {
   this.pages = pages;
   this.read = read;
   this.info = function() {
-    let r = read ? "read" : "not read yet";
+    let r = this.read ? "read" : "not read yet";
     return `${title} \r\nBy: \r\n${author} \r\n${pages} pages \r\n${r}`;
+  }
+  this.toggleRead = function() {
+    this.read = this.read ? false : true;
   }
 }
 
@@ -36,7 +39,7 @@ function addBookToLibraryTest() {
   let newBook = new Book(title, author, pages, readBool);
   myLibrary.push(newBook);
   displayLibrary();
-	tester++;
+  tester++;
 }
 
 function displayLibrary() {
@@ -44,12 +47,17 @@ function displayLibrary() {
   for (let i = 0; i < myLibrary.length; i++) {
     const div = document.createElement('div');
     const btn = document.createElement('button');
+    const btnRead = document.createElement('button');
     applyDivStyleGeneral(div, i);
-		applyButtonStyle(btn);
-		btn.addEventListener('click', removeBtnClick);
+    applyButtonStyle(btn);
+    applyButtonStyle(btnRead);
+    btn.textContent = "Remove";
+    btnRead.textContent = "Change Read Status";
+    btn.addEventListener('click', removeBtnClick);
+    btnRead.addEventListener('click', readBtnClick);
     div.appendChild(btn);
+    div.appendChild(btnRead);
     container.appendChild(div);
-    console.log(div.getAttribute('data-key'));
   }
 }
 
@@ -86,7 +94,6 @@ function applyDivStyleGeneral(div, i) {
 }
 
 function applyButtonStyle(btn) {
-	btn.textContent = "Remove Book";
   btn.setAttribute(
     'style',
     `background-color: aquamarine;
@@ -100,14 +107,21 @@ function applyButtonStyle(btn) {
 		padding: 4px 32px;
 		align-self: start;
 		margin-bottom: 2%;`
-	);
+  );
 }
 
 function removeBook(div) {
-	let ind = div.getAttribute("data-key");
-	myLibrary.splice(ind,1);
-	displayLibrary();
+  let ind = div.getAttribute("data-key");
+  myLibrary.splice(ind, 1);
+  displayLibrary();
 }
+
+function readStatusChange(div) {
+  let ind = div.getAttribute("data-key");
+  myLibrary[ind].toggleRead();
+  displayLibrary();
+}
+
 function openForm() {
   document.getElementById("myForm").style.display = "inline";
 }
@@ -124,5 +138,9 @@ function reset(form) {
 }
 
 function removeBtnClick(e) {
-	removeBook(e.target.parentElement);
+  removeBook(e.target.parentElement);
+}
+
+function readBtnClick(e) {
+  readStatusChange(e.target.parentElement);
 }
