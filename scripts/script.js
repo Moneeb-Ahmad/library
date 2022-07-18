@@ -3,16 +3,18 @@ const container = document.querySelector('.container');
 let tester = 0;
 
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function() {
-    let r = this.read ? "read" : "not read yet";
-    return `${title} \r\nBy: \r\n${author} \r\n${pages} pages \r\n${r}`;
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
   }
-  this.toggleRead = function() {
+  info() {
+    let r = this.read ? "read" : "not read yet";
+    return `${this.title} \r\nBy: \r\n${this.author} \r\n${this.pages} pages \r\n${r}`;
+  }
+  toggleRead() {
     this.read = this.read ? false : true;
   }
 }
